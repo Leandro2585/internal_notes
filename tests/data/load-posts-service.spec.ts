@@ -1,29 +1,9 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
+import { LoadAllPostsRepository } from '@data/protocols'
+import { LoadPostsService } from '@data/services'
 import { PostModel } from '@domain/models'
-import { LoadPostsUseCase } from '@domain/usecases'
 
-export interface LoadAllPostsRepository {
-  loadAll(input: LoadAllPostsRepository.Input): Promise<LoadAllPostsRepository.Output>
-}
-
-export namespace LoadAllPostsRepository {
-  export type Input = { page: number }
-
-  export type Output = { results: PostModel[] }
-}
-
-export class LoadPostsService implements LoadPostsUseCase {
-	constructor(private readonly postsRepository: LoadAllPostsRepository){}
-
-	async execute(input: LoadPostsUseCase.Input): Promise<LoadPostsUseCase.Output> {
-		const { results } = await this.postsRepository.loadAll({ page: input.page })
-		return {
-			currentPage: input.page,
-			results
-		}
-	}
-}
 
 describe('Load Posts Service', () => {
 	let mockedPost: PostModel
@@ -60,4 +40,5 @@ describe('Load Posts Service', () => {
 			currentPage: 1
 		})
 	})
+
 })

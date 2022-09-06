@@ -1,27 +1,15 @@
 {
-  "compilerOptions": {
-    "outDir": "build",
-    "rootDirs": ["src", "tests"],
-    "target": "ES2020",
-    "sourceMap": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "baseUrl": "src",
-    "allowJs": true,
-    "paths": {
-      "@main/*": ["main/*"],
-      "@domain/*": ["domain/*"],
-      "@infra/*": ["infra/*"],
-      "@application/*": ["application/*"],
-      "@data/*": ["data/*"],
-      "@tests/*": ["../tests/*"]
-    },
-    "strict": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  },
-  "include": ["src", "tests"]
+   "compilerOptions": {
+      "lib": [
+         "es5",
+         "es6"
+      ],
+      "target": "es5",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "outDir": "./build",
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "sourceMap": true
+   }
 }
