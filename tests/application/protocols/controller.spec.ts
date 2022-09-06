@@ -31,7 +31,7 @@ describe('controller', () => {
 		const httpResponse = await sut.handle('any_value')
 
 		expect(httpResponse).toEqual({
-			statusCode: 500,
+			status_code: 500,
 			data: new ServerError(error)
 		})
 	})
@@ -41,7 +41,7 @@ describe('controller', () => {
 		const httpResponse = await sut.handle('any_value')
 
 		expect(httpResponse).toEqual({
-			statusCode: 500,
+			status_code: 500,
 			data: new ServerError(undefined)
 		})
 	})
