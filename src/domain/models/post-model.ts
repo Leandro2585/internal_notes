@@ -5,3 +5,8 @@ export type PostModel = {
   created_at: string
   updated_at: string
 }
+
+export enum PostTypes {
+  ORIGINAL = 'original',
+  REPOST = 'repost'
+}

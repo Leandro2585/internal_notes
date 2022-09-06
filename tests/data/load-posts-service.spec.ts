@@ -3,6 +3,7 @@ import { mock, MockProxy } from 'jest-mock-extended'
 import { LoadAllPostsRepository } from '@data/protocols/repositories'
 import { LoadPostsService } from '@data/services'
 import { mockedPost } from '@tests/domain/mocks'
+import { PostTypes } from '@domain/models'
 
 
 describe('Load Posts Service', () => {
@@ -34,6 +35,7 @@ describe('Load Posts Service', () => {
 				id: 1,
 				user_id: 1,
 				description: 'any_description',
+				type: PostTypes.ORIGINAL,
 				created_at: '30 de agosto de 2022',
 				updated_at: '30 de agosto de 2022',
 			}],

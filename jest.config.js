@@ -5,7 +5,7 @@ module.exports = {
 	collectCoverageFrom: [
 		'<rootDir>/src/**/*.ts',
 		'!<rootDir>/src/main/**',
-		'!<rootDir>/src/infra/typeorm/migrations/**',
+		'!<rootDir>/src/infra/database/migrations/**',
 		'!<rootDir>/src/**/index.ts'
 	],
 	coverageDirectory: 'coverage',

@@ -1,5 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
+import { PostTypes } from '@domain/models'
+
 @Entity({ name: 'tb_post' })
 export class PostEntity {
   @PrimaryGeneratedColumn()
@@ -7,10 +9,12 @@ export class PostEntity {
   
   @Column()
   	user_id!: number
-    
+
   @Column()
   	description!: string
 
+  @Column({ default: PostTypes.ORIGINAL })
+  	type?: PostTypes 
 
   @CreateDateColumn()
   	created_at!: Date

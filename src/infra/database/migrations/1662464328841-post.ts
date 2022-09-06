@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner, Table, TableForeignKey} from 'typeorm'
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm'
 
 export class post1662464328841 implements MigrationInterface {
 
@@ -20,6 +20,12 @@ export class post1662464328841 implements MigrationInterface {
 					name: 'description',
 					type: 'varchar',
 					length: '777',
+				},
+				{
+					name: 'type',
+					type: 'enum',
+					enum: ['original', 'repost'],
+					default: 'original',
 				},
 				{
 					name: 'created_at',
@@ -49,5 +55,4 @@ export class post1662464328841 implements MigrationInterface {
 		await queryRunner.dropForeignKey('tb_post', 'post_user')
 		await queryRunner.dropTable('tb_post')
 	}
-
 }

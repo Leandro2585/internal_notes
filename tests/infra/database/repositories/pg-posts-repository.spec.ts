@@ -4,6 +4,7 @@ import { getConnection, getRepository, Repository } from 'typeorm'
 import { PgPostsRepository } from '@infra/database/repositories'
 import { mockedPost } from '@tests/domain/mocks/mock-posts'
 import { PostEntity } from '@infra/database/entities'
+import { PostTypes } from '@domain/models'
 
 describe('Pg Posts Repository', () => {
 	let sut: PgPostsRepository
@@ -81,6 +82,7 @@ describe('Pg Posts Repository', () => {
 			id: 1,
 			user_id: 1,
 			description: 'most_recent_post',
+			type: PostTypes.ORIGINAL,
 			created_at: new Date('2022-08-30 16:32:02'),
 			updated_at: new Date('2022-08-30 16:32:02'),
 		}])
@@ -105,6 +107,7 @@ describe('Pg Posts Repository', () => {
 			id: 2,
 			user_id: 1,
 			description: 'old_post',
+			type: PostTypes.ORIGINAL,
 			created_at: new Date('2022-07-30 16:32:02'),
 			updated_at: new Date('2022-07-30 16:32:02'),
 		}])
