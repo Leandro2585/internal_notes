@@ -10,6 +10,7 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "baseUrl": "src",
+    "allowJs": true,
     "paths": {
       "@main/*": ["main/*"],
       "@domain/*": ["domain/*"],

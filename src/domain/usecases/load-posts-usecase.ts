@@ -7,7 +7,7 @@ export interface LoadPostsUseCase {
 export namespace LoadPostsUseCase {
   export type Input = {
     page: number
-    me: boolean
+    userId: number
   }
 
   export type Output = {
