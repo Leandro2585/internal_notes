@@ -28,9 +28,15 @@ describe('Load Posts Service', () => {
 	test('should return correct results on success', async () => {
 		const response = await sut.execute({ page: 1 })
 
-		expect(response).toMatchObject({
-			results: [mockedPost],
-			currentPage: 1
+		expect(response).toEqual({
+			current_page: 1,
+			results: [{
+				id: 1,
+				user_id: 1,
+				description: 'any_description',
+				created_at: '30 de agosto de 2022',
+				updated_at: '30 de agosto de 2022',
+			}],
 		})
 	})
 

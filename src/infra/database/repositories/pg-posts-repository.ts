@@ -1,22 +1,19 @@
-import { getRepository, FindManyOptions,  } from 'typeorm'
+import { getRepository, createConnection } from 'typeorm'
 
 import { LoadAllPostsRepository } from '@data/protocols/repositories'
 import { PostEntity } from '@infra/database/entities'
 
 export class PgPostsRepository implements LoadAllPostsRepository {
 	async loadAll({ page, final_date, initial_date, user_id }: LoadAllPostsRepository.Input): Promise<LoadAllPostsRepository.Output> {
-		const filters = {}
-		initial_date && Object.assign(filters, { before: new Date(initial_date).toISOString() })
-		final_date && Object.assign(filters, { after: new Date(final_date).toISOString() })
 		const postsRepository = getRepository(PostEntity)
-		const results = await postsRepository
-			.createQueryBuilder()
-			.skip(page)
+		const query = await postsRepository
+			.createQueryBuilder('tb_post')
+			.skip(page - 1)
 			.take(10)
-			.andWhere('createdAt >= :after')
-			.andWhere('createdAt < :before')
-			.setParameters(filters)
-			.getRawMany()
-		return results
+		user_id && query.where('tb_post.user_id = :user_id', { user_id })
+		initial_date && query.where('tb_post.create_at >= :initial_date', { initial_date: new Date(initial_date).toISOString() })
+		final_date && query.where('tb_post.create_at < :final_date', { final_date: new Date(final_date).toISOString() })
+		const results = await query.getMany()
+		return { results }
 	}
 }
