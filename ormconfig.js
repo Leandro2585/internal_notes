@@ -1,20 +1,20 @@
 const root = process.env.TS_NODE_DEV === undefined ? 'dist' : 'src'
-
+console.log(root)
 module.exports = {
 	name: 'default',
 	type: 'postgres',
 	host: 'localhost',
 	username: 'postgres',
 	password: '12345678',
-	database: 'postgres',
+	database: 'internal_notes',
 	port: 5432,
 	entities: [
-		`./${root}/infra/typeorm/entities/*.ts`
+		`./${root}/infra/database/entities/*.ts`
 	],
 	migrations: [
-		`./${root}/infra/typeorm/migrations/*.ts`
+		`./${root}/infra/database/migrations/*.ts`
 	],
 	cli: {
-		migrationsDir: `./${root}/infra/typeorm/migrations`
+		migrationsDir: `./${root}/infra/database/migrations`
 	}
 }

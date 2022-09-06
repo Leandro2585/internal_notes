@@ -13,7 +13,11 @@ export class PostEntity {
   @Column()
   	description!: string
 
-  @Column({ default: PostTypes.ORIGINAL })
+  @Column({ 
+  	type: 'enum',
+  	enum: PostTypes,
+  	default: PostTypes.ORIGINAL 
+  })
   	type?: PostTypes 
 
   @CreateDateColumn()

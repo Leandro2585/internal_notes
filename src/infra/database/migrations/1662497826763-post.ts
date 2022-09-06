@@ -1,6 +1,7 @@
-import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm'
+import {MigrationInterface, QueryRunner, Table, TableForeignKey} from 'typeorm'
 
-export class post1662464328841 implements MigrationInterface {
+export class post1662497826763 implements MigrationInterface {
+	name?: string | undefined
 
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(new Table({
@@ -24,8 +25,10 @@ export class post1662464328841 implements MigrationInterface {
 				{
 					name: 'type',
 					type: 'enum',
+					enumName: 'post_type',
 					enum: ['original', 'repost'],
-					default: 'original',
+					default: `'original'`, // eslint-disable-line quotes
+					isNullable: false,
 				},
 				{
 					name: 'created_at',
