@@ -1,3 +1,4 @@
+import { ServerError } from '@application/errors'
 import { Controller, HttpResponse } from '@application/protocols'
 
 class ControllerStub extends Controller {
@@ -22,5 +23,26 @@ describe('controller', () => {
 		const httpResponse = await sut.handle('any_value')
 
 		expect(httpResponse).toEqual(sut.result)
+	})
+
+	test('should return 500 if execute throws', async () => {
+		const error = new Error('execute_error')
+		jest.spyOn(sut, 'execute').mockRejectedValueOnce(error)
+		const httpResponse = await sut.handle('any_value')
+
+		expect(httpResponse).toEqual({
+			statusCode: 500,
+			data: new ServerError(error)
+		})
+	})
+
+	test('should return 500 if execute throws a non error object', async () => {
+		jest.spyOn(sut, 'execute').mockRejectedValueOnce('execute_error')
+		const httpResponse = await sut.handle('any_value')
+
+		expect(httpResponse).toEqual({
+			statusCode: 500,
+			data: new ServerError(undefined)
+		})
 	})
 })
