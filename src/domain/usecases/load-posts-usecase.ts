@@ -7,11 +7,11 @@ export interface LoadPostsUseCase {
 export namespace LoadPostsUseCase {
   export type Input = {
     page: number
-    userId?: number
+    user_id?: number
   }
 
   export type Output = {
-    currentPage: number
+    current_page: number
     results: PostModel[]
   }
 }

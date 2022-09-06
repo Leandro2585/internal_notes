@@ -5,7 +5,7 @@ export interface LoadAllPostsRepository {
 }
 
 export namespace LoadAllPostsRepository {
-  export type Input = { page: number, userId?: number }
+  export type Input = { page: number, user_id?: number, initial_date?: string, final_date?: string }
 
   export type Output = { results: PostModel[] }
 }

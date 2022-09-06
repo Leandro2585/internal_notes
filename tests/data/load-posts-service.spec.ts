@@ -1,24 +1,17 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
-import { LoadAllPostsRepository } from '@data/protocols'
+import { LoadAllPostsRepository } from '@data/protocols/repositories'
 import { LoadPostsService } from '@data/services'
-import { PostModel } from '@domain/models'
+import { mockedPost } from '@tests/domain/mocks'
 
 
 describe('Load Posts Service', () => {
-	let mockedPost: PostModel
 	let postsRepository: MockProxy<LoadAllPostsRepository>
 	let sut: LoadPostsService
 
 	beforeAll(() => {
 		postsRepository = mock()
-		mockedPost = { 
-			id: 1, 
-			description: 'any_description', 
-			created_at: '2022-09-06T02:07:12.642Z', 
-			updated_at: '2022-09-06T02:07:39.695Z'
-		}
-		postsRepository.loadAll.mockResolvedValue({ results: [mockedPost] })
+		postsRepository.loadAll.mockResolvedValue({ results: [mockedPost()] })
 	})
 
 	beforeEach(() => {
