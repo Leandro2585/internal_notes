@@ -23,6 +23,7 @@
         "@typescript-eslint/restrict-plus-operands": "off",
         "@typescript-eslint/no-var-requires": "off",
         "no-mixed-spaces-and-tabs": "off",
+        "@typescript-eslint/no-explicit-any": "off",
         "indent": [
             "error",
             "tab"
