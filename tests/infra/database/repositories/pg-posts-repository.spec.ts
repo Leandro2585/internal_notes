@@ -1,9 +1,9 @@
 import { IBackup, newDb } from 'pg-mem'
 import { getConnection, getRepository, Repository } from 'typeorm'
 
+import { PgPostsRepository } from '@infra/database/repositories'
 import { mockedPost } from '@tests/domain/mocks/mock-posts'
 import { PostEntity } from '@infra/database/entities'
-import { PgPostsRepository } from '@infra/database/repositories'
 
 describe('Pg Posts Repository', () => {
 	let sut: PgPostsRepository

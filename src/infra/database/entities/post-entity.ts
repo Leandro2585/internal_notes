@@ -6,10 +6,11 @@ export class PostEntity {
   	id!: number
   
   @Column()
+  	user_id!: number
+    
+  @Column()
   	description!: string
 
-  @Column()
-  	user_id!: number
 
   @CreateDateColumn()
   	created_at!: Date
