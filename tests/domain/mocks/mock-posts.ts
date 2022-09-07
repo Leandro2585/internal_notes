@@ -10,15 +10,6 @@ export const mockedPostEntity = (): PostEntity => ({
 	updated_at: new Date('2022-08-30 16:32:02'),
 })
 
-export const mockEmptyPostEntity = (): PostEntity => ({
-	id: 0,
-	user_id: 0,
-	description: '',
-	type: PostTypes.ORIGINAL,
-	created_at: new Date(),
-	updated_at: new Date()
-})
-
 export const mockedPostModel = (): PostModel => ({
 	id: 1,
 	user_id: 1,
