@@ -11,7 +11,8 @@ export class post1662497826763 implements MigrationInterface {
 					name: 'id',
 					type: 'integer',
 					isPrimary: true,
-					generationStrategy: 'increment'
+					generationStrategy: 'increment',
+					isGenerated: true
 				},
 				{
 					name: 'user_id',
