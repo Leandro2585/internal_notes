@@ -142,6 +142,17 @@ describe('pg posts repository', () => {
 	})
 
 	describe('create()', () => {
-    
+		test('should create a new repost', async () => {
+			const result = await sut.create({ description: 'any_description', type: PostTypes.REPOST, user_id: 1 })
+      
+			expect(result).toMatchObject({
+				post: {
+					id: 1,
+					user_id: 1,
+					description: 'any_description', 
+					type: PostTypes.REPOST, 
+				}
+			})
+		})
 	})
 })

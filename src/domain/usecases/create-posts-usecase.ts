@@ -14,6 +14,6 @@ export namespace CreatePostsUseCase {
   }
 
   export type Output = {
-    post: PostModel | undefined 
+    post: PostModel 
   }
 }
