@@ -1,12 +1,11 @@
 
-import { getConnection, getRepository, getConnectionManager, QueryRunner, Connection, ObjectType, createConnection, Repository } from 'typeorm'
+import { getConnection, getRepository, getConnectionManager, Connection, ObjectType, createConnection, Repository, ObjectLiteral } from 'typeorm'
 
 import { ConnectionNotFoundError } from '@infra/database/helpers'
 
 export class PostgresConnection {
 	private static instance?: PostgresConnection
-	private query?: QueryRunner
-	private connection?: Connection
+	private connection?: Connection | undefined
 
 	private constructor () {}
 
@@ -26,13 +25,11 @@ export class PostgresConnection {
 	async disconnect (): Promise<void> {
 		if (this.connection === undefined) throw new ConnectionNotFoundError()
 		await getConnection().close()
-		this.query = undefined
 		this.connection = undefined
 	}
 
-	getRepository<Entity> (entity: ObjectType<Entity>): Repository<any> {
+	getRepository<Entity extends  ObjectLiteral> (entity: ObjectType<Entity>): Repository<Entity> {
 		if (this.connection === undefined) throw new ConnectionNotFoundError()
-		if (this.query !== undefined) return this.query.manager.getRepository(entity)
 		return getRepository(entity)
 	}
 }
