@@ -3,16 +3,9 @@ import { Repository } from 'typeorm'
 import { UserEntity } from '@infra/database/entities'
 import { PostgresConnection } from '@infra/database/helpers'
 import { makeFakeDatabase } from '../helpers/mock-database'
-import { LoadUserByIdRepository } from '@data/protocols/repositories'
 import { PostgresRepository } from '@infra/database/protocols'
+import { PgUsersRepository } from '@infra/database/repositories'
 
-export class PgUsersRepository extends PostgresRepository implements LoadUserByIdRepository {
-	async loadById({ user_id }: LoadUserByIdRepository.Input): Promise<LoadUserByIdRepository.Output> {
-		const usersRepository = this.getRepository(UserEntity)
-		const user = await usersRepository.findOne({ where: { id: user_id } })
-		return { user }
-	}
-}
 
 describe('pg users repository', () => {
 	let sut: PgUsersRepository
