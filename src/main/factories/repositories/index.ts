@@ -1,0 +1,1 @@
+export * from './pg-load-posts-repository-factory'

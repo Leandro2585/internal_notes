@@ -6,10 +6,10 @@ export const success = <T = any>(data: T): HttpResponse<T> => ({
 	data
 })
 
-export const badRequest = (error: Error): HttpResponse<Error> => ({
-	status_code: 400,
-	data: error
-})
+// export const badRequest = (error: Error): HttpResponse<Error> => ({
+// 	status_code: 400,
+// 	data: error
+// })
 
 export const serverError = (error: unknown): HttpResponse<Error> => ({
 	status_code: 500,

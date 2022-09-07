@@ -1,35 +1,38 @@
-import { IBackup, newDb } from 'pg-mem'
-import { getConnection, getRepository, Repository } from 'typeorm'
+import { IBackup } from 'pg-mem'
+import { Repository } from 'typeorm'
 
+import { PostgresConnection } from '@infra/database/helpers'
+import { PostgresRepository } from '@infra/database/protocols'
 import { PgPostsRepository } from '@infra/database/repositories'
 import { mockedPostEntity } from '@tests/domain/mocks'
+import { makeFakeDatabase } from '../helpers/mock-database'
 import { PostEntity } from '@infra/database/entities'
 import { PostTypes } from '@domain/models'
 
 describe('Pg Posts Repository', () => {
 	let sut: PgPostsRepository
 	let pgPostRepository: Repository<PostEntity>
+	let connection: PostgresConnection
 	let backup: IBackup
 
 	beforeAll(async () => {
-		const db = newDb()
-		const connection = await db.adapters.createTypeormConnection({
-			type: 'postgres',
-			entities: [PostEntity]
-		})
-		await connection.synchronize()
-		backup = db.backup()
-		pgPostRepository = getRepository(PostEntity)
-		
-	})
+		connection = PostgresConnection.getInstance()
+		const database = makeFakeDatabase([PostEntity])
+		backup = (await database).backup()
+		pgPostRepository = connection.getRepository(PostEntity)
+  	})
 
 	afterAll(async () => {
-		await getConnection().close()
+		connection.disconnect()
 	})
 
 	beforeEach(() => {
 		backup.restore()
 		sut = new PgPostsRepository()
+	})
+
+	test('should extend postgres repository', () => {
+		expect(sut).toBeInstanceOf(PostgresRepository)
 	})
 
 	test('should return all posts by page', async () => {

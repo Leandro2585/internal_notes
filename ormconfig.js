@@ -1,5 +1,5 @@
 const root = process.env.TS_NODE_DEV === undefined ? 'dist' : 'src'
-console.log(root)
+
 module.exports = {
 	name: 'default',
 	type: 'postgres',
