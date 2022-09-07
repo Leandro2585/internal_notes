@@ -8,6 +8,8 @@ export namespace LoadPostsUseCase {
   export type Input = {
     page: number
     user_id?: number
+    initial_date?: string, 
+    final_date?: string
   }
 
   export type Output = {

@@ -2,7 +2,7 @@ import { IBackup, newDb } from 'pg-mem'
 import { getConnection, getRepository, Repository } from 'typeorm'
 
 import { PgPostsRepository } from '@infra/database/repositories'
-import { mockedPost } from '@tests/domain/mocks/mock-posts'
+import { mockedPostEntity } from '@tests/domain/mocks'
 import { PostEntity } from '@infra/database/entities'
 import { PostTypes } from '@domain/models'
 
@@ -41,7 +41,7 @@ describe('Pg Posts Repository', () => {
 		})
 		const { results } = await sut.loadAll({ page: 1 })
     
-		expect(results).toEqual([mockedPost()])
+		expect(results).toEqual([mockedPostEntity()])
 	})
 
 	test('should return only posts of user', async () => {

@@ -18,7 +18,7 @@ export class PostEntity {
   	enum: PostTypes,
   	default: PostTypes.ORIGINAL 
   })
-  	type?: PostTypes 
+  	type!: PostTypes 
 
   @CreateDateColumn()
   	created_at!: Date

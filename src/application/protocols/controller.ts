@@ -4,15 +4,15 @@ import { HttpResponse, Validator } from '@application/protocols'
 interface IController {
   execute(httpRequest: any): Promise<HttpResponse>
   handle(httpRequest: any): Promise<HttpResponse>
-  buildValidators(httpRequest: any): Validator[]
+  // buildValidators(httpRequest: any): Validator[]
 }
 
 export abstract class Controller implements IController {
 	abstract execute(httpRequest: any): Promise<HttpResponse>
 
-	buildValidators(httpRequest: any): Validator[] {
-		return []
-	}
+	// buildValidators(httpRequest: any): Validator[] {
+	// 	return []
+	// }
 
 	async handle(httpRequest: any): Promise<HttpResponse> {
 		// const error = this.validate(httpRequest)

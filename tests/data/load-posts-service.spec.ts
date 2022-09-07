@@ -2,7 +2,7 @@ import { mock, MockProxy } from 'jest-mock-extended'
 
 import { LoadAllPostsRepository } from '@data/protocols/repositories'
 import { LoadPostsService } from '@data/services'
-import { mockedPost } from '@tests/domain/mocks'
+import { mockedPostEntity } from '@tests/domain/mocks'
 import { PostTypes } from '@domain/models'
 
 
@@ -12,7 +12,7 @@ describe('Load Posts Service', () => {
 
 	beforeAll(() => {
 		postsRepository = mock()
-		postsRepository.loadAll.mockResolvedValue({ results: [mockedPost()] })
+		postsRepository.loadAll.mockResolvedValue({ results: [mockedPostEntity()] })
 	})
 
 	beforeEach(() => {
