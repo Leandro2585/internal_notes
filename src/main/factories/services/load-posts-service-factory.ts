@@ -1,7 +1,7 @@
 import { LoadPostsService } from '@data/services'
-import { makePgLoadPostsRepository } from '@main/factories/repositories'
+import { makePgPostsRepository } from '@main/factories/repositories'
 
 export const makeLoadPostsService = (): LoadPostsService => {
-	const repository = makePgLoadPostsRepository()
+	const repository = makePgPostsRepository()
 	return new LoadPostsService(repository)
 }

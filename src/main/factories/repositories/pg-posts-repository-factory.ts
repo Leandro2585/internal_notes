@@ -1,5 +1,5 @@
 import { PgPostsRepository } from '@infra/database/repositories'
 
-export const makePgLoadPostsRepository = (): PgPostsRepository => {
+export const makePgPostsRepository = (): PgPostsRepository => {
 	return new PgPostsRepository()
 }
