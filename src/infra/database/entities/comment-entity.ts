@@ -9,7 +9,7 @@ export class CommentEntity {
   	user_id!: number
 
   @Column()
-  	post_id!: string
+  	post_id!: number
 
   @Column()
   	comment!: string
