@@ -30,89 +30,112 @@ describe('pg posts repository', () => {
 		backup.restore()
 		sut = new PgPostsRepository()
 	})
-
+  
 	test('should extend postgres repository', () => {
 		expect(sut).toBeInstanceOf(PostgresRepository)
 	})
 
-	test('should return all posts by page', async () => {
-		await pgPostRepository.save({
-			user_id: 1,
-			description: 'any_description',
-			created_at: new Date('2022-08-30 16:32:02'),
-			updated_at: new Date('2022-08-30 16:32:02')
+	describe('load()', () => {    
+		test('should return all posts by page', async () => {
+			await pgPostRepository.save({
+				user_id: 1,
+				description: 'any_description',
+				created_at: new Date('2022-08-30 16:32:02'),
+				updated_at: new Date('2022-08-30 16:32:02')
+			})
+			const { results } = await sut.load({ page: 1 })
+        
+			expect(results).toEqual([mockedPostEntity()])
 		})
-		const { results } = await sut.load({ page: 1 })
     
-		expect(results).toEqual([mockedPostEntity()])
+		test('should return only posts of user', async () => {
+			await pgPostRepository.save({
+				user_id: 2,
+				description: 'any_description',
+				created_at: new Date('2022-08-30 16:32:02'),
+				updated_at: new Date('2022-08-30 16:32:02'),
+			})
+			await pgPostRepository.save({
+				user_id: 1,
+				description: 'other_post',
+				created_at: new Date('2022-08-30 16:32:02'),
+				updated_at: new Date('2022-08-30 16:32:02'),
+			})
+    
+			const { results } = await sut.load({ page: 1, user_id: 1 })
+    
+			expect(results).toMatchObject([{ description: 'other_post', user_id: 1 }])
+		})
+    
+		test('should return only posts with created_at field more than initial_date', async () => {
+			await pgPostRepository.save({
+				user_id: 1,
+				description: 'most_recent_post',
+				created_at: new Date('2022-08-30 16:32:02'),
+				updated_at: new Date('2022-08-30 16:32:02'),
+			})
+			await pgPostRepository.save({
+				user_id: 1,
+				description: 'old_post',
+				created_at: new Date('2022-07-30 16:32:02'),
+				updated_at: new Date('2022-07-30 16:32:02'),
+			})
+			const { results } = await sut.load({ page: 1, initial_date: '2022-08-01'})
+        
+			expect(results).toEqual([{
+				id: 1,
+				user_id: 1,
+				description: 'most_recent_post',
+				type: PostTypes.ORIGINAL,
+				created_at: new Date('2022-08-30 16:32:02'),
+				updated_at: new Date('2022-08-30 16:32:02'),
+			}])
+		})
+    
+		test('should return only posts with created_at field less than final_date', async () => {
+			await pgPostRepository.save({
+				user_id: 1,
+				description: 'most_recent_post',
+				created_at: new Date('2022-08-30 16:32:02'),
+				updated_at: new Date('2022-08-30 16:32:02'),
+			})
+			await pgPostRepository.save({
+				user_id: 1,
+				description: 'old_post',
+				created_at: new Date('2022-07-30 16:32:02'),
+				updated_at: new Date('2022-07-30 16:32:02'),
+			})
+			const { results } = await sut.load({ page: 1, final_date: '2022-08-01'})
+        
+			expect(results).toEqual([{
+				id: 2,
+				user_id: 1,
+				description: 'old_post',
+				type: PostTypes.ORIGINAL,
+				created_at: new Date('2022-07-30 16:32:02'),
+				updated_at: new Date('2022-07-30 16:32:02'),
+			}])
+		})
 	})
-
-	test('should return only posts of user', async () => {
-		await pgPostRepository.save({
-			user_id: 2,
-			description: 'any_description',
-			created_at: new Date('2022-08-30 16:32:02'),
-			updated_at: new Date('2022-08-30 16:32:02'),
-		})
-		await pgPostRepository.save({
-			user_id: 1,
-			description: 'other_post',
-			created_at: new Date('2022-08-30 16:32:02'),
-			updated_at: new Date('2022-08-30 16:32:02'),
-		})
-
-		const { results } = await sut.load({ page: 1, user_id: 1 })
-
-		expect(results).toMatchObject([{ description: 'other_post', user_id: 1 }])
-	})
-
-	test('should return only posts with created_at field more than initial_date', async () => {
-		await pgPostRepository.save({
-			user_id: 1,
-			description: 'most_recent_post',
-			created_at: new Date('2022-08-30 16:32:02'),
-			updated_at: new Date('2022-08-30 16:32:02'),
-		})
-		await pgPostRepository.save({
-			user_id: 1,
-			description: 'old_post',
-			created_at: new Date('2022-07-30 16:32:02'),
-			updated_at: new Date('2022-07-30 16:32:02'),
-		})
-		const { results } = await sut.load({ page: 1, initial_date: '2022-08-01'})
+	
+	describe('loadById()', () => {
+		test('should return post with the same post_id provided', async () => {
+			await pgPostRepository.save({
+				user_id: 1,
+				description: 'most_recent_post',
+				created_at: new Date('2022-08-30 16:32:02'),
+				updated_at: new Date('2022-08-30 16:32:02'),
+			})
+			const result = await sut.loadById({ post_id: 1 })
 		
-		expect(results).toEqual([{
-			id: 1,
-			user_id: 1,
-			description: 'most_recent_post',
-			type: PostTypes.ORIGINAL,
-			created_at: new Date('2022-08-30 16:32:02'),
-			updated_at: new Date('2022-08-30 16:32:02'),
-		}])
-	})
-
-	test('should return only posts with created_at field less than final_date', async () => {
-		await pgPostRepository.save({
-			user_id: 1,
-			description: 'most_recent_post',
-			created_at: new Date('2022-08-30 16:32:02'),
-			updated_at: new Date('2022-08-30 16:32:02'),
+			expect(result).toEqual({
+				id: 1,
+				user_id: 1,
+				description: 'most_recent_post',
+				type: PostTypes.ORIGINAL,
+				created_at: new Date('2022-08-30 16:32:02'),
+				updated_at: new Date('2022-08-30 16:32:02'),
+			})
 		})
-		await pgPostRepository.save({
-			user_id: 1,
-			description: 'old_post',
-			created_at: new Date('2022-07-30 16:32:02'),
-			updated_at: new Date('2022-07-30 16:32:02'),
-		})
-		const { results } = await sut.load({ page: 1, final_date: '2022-08-01'})
-		
-		expect(results).toEqual([{
-			id: 2,
-			user_id: 1,
-			description: 'old_post',
-			type: PostTypes.ORIGINAL,
-			created_at: new Date('2022-07-30 16:32:02'),
-			updated_at: new Date('2022-07-30 16:32:02'),
-		}])
 	})
 })
