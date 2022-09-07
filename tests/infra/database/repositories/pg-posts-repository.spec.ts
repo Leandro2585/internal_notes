@@ -9,7 +9,7 @@ import { makeFakeDatabase } from '../helpers/mock-database'
 import { PostEntity } from '@infra/database/entities'
 import { PostTypes } from '@domain/models'
 
-describe('Pg Posts Repository', () => {
+describe('pg posts repository', () => {
 	let sut: PgPostsRepository
 	let pgPostRepository: Repository<PostEntity>
 	let connection: PostgresConnection
@@ -42,7 +42,7 @@ describe('Pg Posts Repository', () => {
 			created_at: new Date('2022-08-30 16:32:02'),
 			updated_at: new Date('2022-08-30 16:32:02')
 		})
-		const { results } = await sut.loadAll({ page: 1 })
+		const { results } = await sut.load({ page: 1 })
     
 		expect(results).toEqual([mockedPostEntity()])
 	})
@@ -61,7 +61,7 @@ describe('Pg Posts Repository', () => {
 			updated_at: new Date('2022-08-30 16:32:02'),
 		})
 
-		const { results } = await sut.loadAll({ page: 1, user_id: 1 })
+		const { results } = await sut.load({ page: 1, user_id: 1 })
 
 		expect(results).toMatchObject([{ description: 'other_post', user_id: 1 }])
 	})
@@ -79,7 +79,7 @@ describe('Pg Posts Repository', () => {
 			created_at: new Date('2022-07-30 16:32:02'),
 			updated_at: new Date('2022-07-30 16:32:02'),
 		})
-		const { results } = await sut.loadAll({ page: 1, initial_date: '2022-08-01'})
+		const { results } = await sut.load({ page: 1, initial_date: '2022-08-01'})
 		
 		expect(results).toEqual([{
 			id: 1,
@@ -104,7 +104,7 @@ describe('Pg Posts Repository', () => {
 			created_at: new Date('2022-07-30 16:32:02'),
 			updated_at: new Date('2022-07-30 16:32:02'),
 		})
-		const { results } = await sut.loadAll({ page: 1, final_date: '2022-08-01'})
+		const { results } = await sut.load({ page: 1, final_date: '2022-08-01'})
 		
 		expect(results).toEqual([{
 			id: 2,

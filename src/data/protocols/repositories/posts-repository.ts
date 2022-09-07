@@ -1,10 +1,10 @@
 import { PostEntity } from '@infra/database/entities'
 
-export interface LoadAllPostsRepository {
-  loadAll(input: LoadAllPostsRepository.Input): Promise<LoadAllPostsRepository.Output>
+export interface LoadPostsRepository {
+  load(input: LoadPostsRepository.Input): Promise<LoadPostsRepository.Output>
 }
 
-export namespace LoadAllPostsRepository {
+export namespace LoadPostsRepository {
   export type Input = { page: number, user_id?: number, initial_date?: string, final_date?: string }
 
   export type Output = { results: PostEntity[] }

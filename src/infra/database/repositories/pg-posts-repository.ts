@@ -1,9 +1,10 @@
-import { LoadAllPostsRepository } from '@data/protocols/repositories'
+import { LoadPostsRepository } from '@data/protocols/repositories'
 import { PostgresRepository } from '@infra/database/protocols'
 import { PostEntity } from '@infra/database/entities'
 
-export class PgPostsRepository extends PostgresRepository implements LoadAllPostsRepository {
-	async loadAll({ page, final_date, initial_date, user_id }: LoadAllPostsRepository.Input): Promise<LoadAllPostsRepository.Output> {
+export class PgPostsRepository extends PostgresRepository implements LoadPostsRepository {
+
+	async load({ page, final_date, initial_date, user_id }: LoadPostsRepository.Input): Promise<LoadPostsRepository.Output> {
 		const postsRepository = this.getRepository(PostEntity)
 		const query = postsRepository
 			.createQueryBuilder('tb_post')

@@ -1,29 +1,29 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
-import { LoadAllPostsRepository } from '@data/protocols/repositories'
+import { LoadPostsRepository } from '@data/protocols/repositories'
 import { LoadPostsService } from '@data/services'
 import { mockedPostEntity } from '@tests/domain/mocks'
 import { PostTypes } from '@domain/models'
 
 
-describe('Load Posts Service', () => {
-	let postsRepository: MockProxy<LoadAllPostsRepository>
+describe('load posts service', () => {
+	let postsRepository: MockProxy<LoadPostsRepository>
 	let sut: LoadPostsService
 
 	beforeAll(() => {
 		postsRepository = mock()
-		postsRepository.loadAll.mockResolvedValue({ results: [mockedPostEntity()] })
+		postsRepository.load.mockResolvedValue({ results: [mockedPostEntity()] })
 	})
 
 	beforeEach(() => {
 		sut = new LoadPostsService(postsRepository)
 	})
 
-	test('should call LoadAllPostsRepository with correct input', async () => {
+	test('should call LoadPostsRepository with correct input', async () => {
 		await sut.execute({ page: 1 })
 
-		expect(postsRepository.loadAll).toHaveBeenCalledWith({ page: 1 })
-		expect(postsRepository.loadAll).toHaveBeenCalledTimes(1)
+		expect(postsRepository.load).toHaveBeenCalledWith({ page: 1 })
+		expect(postsRepository.load).toHaveBeenCalledTimes(1)
 	})
 
 	test('should return correct results on success', async () => {
