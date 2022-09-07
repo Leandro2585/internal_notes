@@ -30,4 +30,18 @@ describe('load posts controller', () => {
 			final_date: undefined 
 		})
 	})
+
+	test('should call load posts usecase with correct data structure', async () => {
+		await sut.handle({
+			user_id: '1',
+			page: '1'
+		})
+    
+		expect(loadPostsUseCaseSpy.input).toEqual({ 
+			page: 1, 
+			user_id: 1, 
+			initial_date: undefined,
+			final_date: undefined 
+		})
+	})
 })
