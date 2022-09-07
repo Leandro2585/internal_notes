@@ -1,19 +1,11 @@
-import { CreateCommentRepository } from '@data/protocols/repositories'
-import { PostgresRepository } from '@infra/database/protocols'
-import { PostgresConnection } from '@infra/database/helpers'
-import { CommentEntity } from '@infra/database/entities'
 import { IBackup } from 'pg-mem'
-import { makeFakeDatabase } from '../helpers/mock-database'
 import { Repository } from 'typeorm'
 
-export class PgCommentsRepository extends PostgresRepository implements CreateCommentRepository {
-	async create({ comment, post_id, user_id }: CreateCommentRepository.Input): Promise<CreateCommentRepository.Output> {
-		const commentsRepository = this.getRepository(CommentEntity)
-		const created_comment = commentsRepository.create({ comment, user_id, post_id })
-		await commentsRepository.save(created_comment)
-		return { comment: created_comment }
-	}
-}
+import { PgCommentsRepository } from '@infra/database/repositories'
+import { PostgresRepository } from '@infra/database/protocols'
+import { PostgresConnection } from '@infra/database/helpers'
+import { makeFakeDatabase } from '../helpers/mock-database'
+import { CommentEntity } from '@infra/database/entities'
 
 describe('pg comments repository', () => {
 	let sut: PgCommentsRepository
