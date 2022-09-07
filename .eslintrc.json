@@ -25,6 +25,7 @@
         "no-mixed-spaces-and-tabs": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-empty-function": "off",
+        "prefer-const": "off",
         "indent": [
             "error",
             "tab"
