@@ -19,6 +19,7 @@ export abstract class Controller implements IController {
   	try {
   		return await this.execute(httpRequest)
   	} catch (error) {
+  		console.log(error)
   		return serverError(error)
   	}
   }

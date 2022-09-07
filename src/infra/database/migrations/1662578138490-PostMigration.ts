@@ -1,8 +1,6 @@
 import {MigrationInterface, QueryRunner, Table, TableForeignKey} from 'typeorm'
 
-export class post1662497826763 implements MigrationInterface {
-	name?: string | undefined
-
+export class PostMigration1662578138490 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(new Table({
 			name: 'tb_post',
@@ -11,8 +9,7 @@ export class post1662497826763 implements MigrationInterface {
 					name: 'id',
 					type: 'integer',
 					isPrimary: true,
-					generationStrategy: 'increment',
-					isGenerated: true
+					generationStrategy: 'increment'
 				},
 				{
 					name: 'user_id',

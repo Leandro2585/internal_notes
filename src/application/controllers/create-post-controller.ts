@@ -2,7 +2,7 @@ import { Controller, HttpResponse } from '@application/protocols'
 import { CreatePostsUseCase } from '@domain/usecases'
 import { PostModel } from '@domain/models'
 import { success } from '@application/helper'
-import { ExcessiveCharacters } from '@application/errors'
+import { ExcessiveCharactersError } from '@application/errors'
 
 export class CreatePostController extends Controller {
 	constructor (private readonly createPostsUseCase: CreatePostsUseCase) { super() }
@@ -13,7 +13,7 @@ export class CreatePostController extends Controller {
 	}
 
 	validate({ post }: CreatePostController.Request): Error | undefined {
-		if(post?.description && post.description.length >= 777) throw new ExcessiveCharacters('description', 777)
+		if(post?.description && post?.description.length >= 777) return new ExcessiveCharactersError('description', 777)
 		return undefined
 	}
 }

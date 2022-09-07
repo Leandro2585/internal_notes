@@ -1,6 +1,8 @@
 import { CreatePostsUseCaseSpy } from '../fakes/create-post-usecase-spy'
 import { CreatePostController } from '@application/controllers'
 import { Controller } from '@application/protocols'
+import { randomCharactersGenerator } from '../fakes'
+import { ExcessiveCharactersError } from '@application/errors'
 
 
 describe('create post controller', () => {
@@ -44,6 +46,15 @@ describe('create post controller', () => {
 			user_id: 1, 
 			post_id: 1,
 			post: undefined 
+		})
+	})
+
+	test('should throw ExcessiveCharactersError when description field exceed 777 characters', async () => {
+		const result = await sut.handle({ user_id: 1, post: { description: randomCharactersGenerator(778) }})
+
+		expect(result).toEqual({
+			status_code: 400,
+			data: new ExcessiveCharactersError('description', 777)
 		})
 	})
 })

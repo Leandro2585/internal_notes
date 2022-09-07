@@ -1,6 +1,7 @@
 import { CreatePostRepository, LoadPostByIdRepository, LoadPostsRepository } from '@data/protocols/repositories'
 import { PostgresRepository } from '@infra/database/protocols'
 import { PostEntity } from '@infra/database/entities'
+import { PostTypes } from '@domain/models'
 
 export class PgPostsRepository extends PostgresRepository implements LoadPostsRepository, LoadPostByIdRepository, CreatePostRepository {
 	async create({ description, type, user_id }: CreatePostRepository.Input): Promise<CreatePostRepository.Output> {
@@ -12,7 +13,7 @@ export class PgPostsRepository extends PostgresRepository implements LoadPostsRe
   
 	async loadById({ post_id }: LoadPostByIdRepository.Input): Promise<LoadPostByIdRepository.Output> {
 		const postsRepository = this.getRepository(PostEntity)
-		const post = await postsRepository.findOne({ where: { id: post_id }})
+		const post = await postsRepository.findOne({ where: { id: post_id, type: PostTypes.ORIGINAL }})
 		return { post }
 	}
 

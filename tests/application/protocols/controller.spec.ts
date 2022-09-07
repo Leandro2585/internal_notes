@@ -49,4 +49,14 @@ describe('controller', () => {
 			data: new ServerError(undefined)
 		})
 	})
+
+	test('should thows Error when validate returns Error', async () => {
+		jest.spyOn(sut, 'validate').mockReturnValueOnce(new Error('validation_error'))
+		const httpResponse = await sut.handle('any_value')
+
+		expect(httpResponse).toEqual({
+			status_code: 400,
+			data: new Error('validation_error')
+		})
+	})
 })
