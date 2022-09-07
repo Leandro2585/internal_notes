@@ -16,7 +16,7 @@ export class CreatePostsService {
 		if (results.length == 5) throw new CreationLimitExceeded()
 		if (post_id) {
 			const { post: selected_post }= await this.postsRepository.loadById({ post_id })
-			if(selected_post == undefined) throw new NotFoundError()
+			if(selected_post == undefined) throw new NotFoundError('posts')
 			created_post = (await this.postsRepository.create({ description: selected_post.description, user_id, type: PostTypes.REPOST })).post
 		} else if (post) {
 			created_post = (await this.postsRepository.create({ ...post, user_id, type: PostTypes.ORIGINAL })).post

@@ -1,7 +1,7 @@
 
 export class NotFoundError extends Error {
-	constructor () {
-		super('Register not found.')
+	constructor (tableName?: string) {
+		super(`Register of ${tableName} not found.`)
 		this.name = 'NotFoundError'
 	}
 }

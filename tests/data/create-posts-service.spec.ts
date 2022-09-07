@@ -52,7 +52,7 @@ describe('create posts service', () => {
 		postsRepository.loadById.mockResolvedValue({ post: undefined })
 		const promise = sut.execute({ user_id: 1, post_id: 1 })
 
-		await expect(promise).rejects.toThrow(new NotFoundError())
+		await expect(promise).rejects.toThrow(new NotFoundError('posts'))
 	})
 
 	test('should throws CreationLimitExceededError when user create more than 5 posts in the same day', async () => {
