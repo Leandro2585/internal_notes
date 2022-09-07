@@ -1,60 +1,9 @@
-import { LoadPostByIdRepository } from '@data/protocols/repositories'
-import { NotFoundError } from '@domain/errors'
-import { PostTypes } from '@domain/models'
-import { CreateCommentUseCase } from '@domain/usecases/create-comment-usecase'
-import { CommentEntity, UserEntity } from '@infra/database/entities'
-import { mockedCommentEntity, mockedPostEntity, mockedUserEntity } from '@tests/domain/mocks'
 import { mock, MockProxy } from 'jest-mock-extended'
 
-export interface CreateCommentRepository {
-  create(input: CreateCommentRepository.Input): Promise<CreateCommentRepository.Output>
-}
-
-export namespace CreateCommentRepository {
-  export type Input = { 
-    comment: string
-    user_id: number
-    post_id: number
-  }
-
-  export type Output = {
-    comment: CommentEntity
-  }
-}
-
-export interface LoadUserByIdRepository {
-  loadById(input: LoadUserByIdRepository.Input): Promise<LoadUserByIdRepository.Output>
-}
-export namespace LoadUserByIdRepository {
-  export type Input = { user_id: number }
-
-  export type Output = { user: UserEntity | undefined }
-}
-
-export class CreateCommentService implements CreateCommentUseCase {
-	constructor (
-    private readonly postsRepository: LoadPostByIdRepository, 
-		private readonly usersRepository: LoadUserByIdRepository,
-		private readonly commentsRepository: CreateCommentRepository
-	) {}
-	async execute({ post_id, user_id, comment }: CreateCommentUseCase.Input): Promise<CreateCommentUseCase.Output> {
-		const { post: existing_post } = await this.postsRepository.loadById({ post_id })
-		if(existing_post == undefined) throw new NotFoundError('posts')
-		const { user: existing_user } = await this.usersRepository.loadById({ user_id })
-		if(existing_user == undefined) throw new NotFoundError('users')
-		await this.commentsRepository.create({ comment, post_id, user_id })
-		return {
-			comment: {
-				post_id: 1,
-				username: 'string',
-				comment: 'string',
-				type: PostTypes.ORIGINAL,
-				created_at: '',
-				updated_at: ''
-			}
-		}
-	}
-}
+import { CreateCommentRepository, LoadPostByIdRepository, LoadUserByIdRepository } from '@data/protocols/repositories'
+import { mockedCommentEntity, mockedPostEntity, mockedUserEntity } from '@tests/domain/mocks'
+import { CreateCommentService } from '@data/services'
+import { NotFoundError } from '@domain/errors'
 
 describe('create comment usecase', () => {
 	let sut: CreateCommentService
