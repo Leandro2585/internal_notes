@@ -10,6 +10,10 @@ class ControllerStub extends Controller {
 	async execute (httpRequest: any): Promise<HttpResponse> {
 		return this.result
 	}
+  
+	validate(httpRequest: any): Error | undefined {
+		return
+	}
 }
 
 describe('controller', () => {

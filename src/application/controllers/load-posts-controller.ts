@@ -11,6 +11,10 @@ export class LoadPostsController extends Controller {
 		const response = await this.loadPosts.execute({ page: Number(page), initial_date, final_date, user_id: user_id ? Number(user_id) : undefined })
 		return success(response)
 	}
+
+	validate(httpRequest: LoadPostsController.Request): Error | undefined {
+		return
+	}
 }
 
 export namespace LoadPostsController {

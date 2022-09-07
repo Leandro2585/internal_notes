@@ -2,6 +2,7 @@ import { Controller, HttpResponse } from '@application/protocols'
 import { CreatePostsUseCase } from '@domain/usecases'
 import { PostModel } from '@domain/models'
 import { success } from '@application/helper'
+import { ExcessiveCharacters } from '@application/errors'
 
 export class CreatePostController extends Controller {
 	constructor (private readonly createPostsUseCase: CreatePostsUseCase) { super() }
@@ -9,6 +10,11 @@ export class CreatePostController extends Controller {
 	async execute({ user_id, post, post_id }: CreatePostController.Request): Promise<HttpResponse<CreatePostController.Response>> {
 		const response = await this.createPostsUseCase.execute({ user_id: Number(user_id), post_id: post_id ? Number(post_id) : undefined, post: post ?? undefined })
 		return success(response)
+	}
+
+	validate({ post }: CreatePostController.Request): Error | undefined {
+		if(post?.description && post.description.length >= 777) throw new ExcessiveCharacters('description', 777)
+		return undefined
 	}
 }
 
