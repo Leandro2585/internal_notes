@@ -2,10 +2,18 @@ import { CreatePostRepository, LoadPostByIdRepository, LoadPostsRepository } fro
 import { PostgresRepository } from '@infra/database/protocols'
 import { PostEntity } from '@infra/database/entities'
 
-export class PgPostsRepository extends PostgresRepository implements LoadPostsRepository, LoadPostByIdRepository {
+export class PgPostsRepository extends PostgresRepository implements LoadPostsRepository, LoadPostByIdRepository, CreatePostRepository {
+	async create({ description, type, user_id }: CreatePostRepository.Input): Promise<CreatePostRepository.Output> {
+		const postsRepository = this.getRepository(PostEntity)
+		const post = postsRepository.create({ description, user_id, type })
+		await postsRepository.save(post)
+		return { post }
+	}
+  
 	async loadById({ post_id }: LoadPostByIdRepository.Input): Promise<LoadPostByIdRepository.Output> {
 		const postsRepository = this.getRepository(PostEntity)
-		return await postsRepository.findOne({ where: { id: post_id }})
+		const post = await postsRepository.findOne({ where: { id: post_id }})
+		return { post }
 	}
 
 	async load({ page, final_date, initial_date, user_id }: LoadPostsRepository.Input): Promise<LoadPostsRepository.Output> {

@@ -128,14 +128,20 @@ describe('pg posts repository', () => {
 			})
 			const result = await sut.loadById({ post_id: 1 })
 		
-			expect(result).toEqual({
-				id: 1,
-				user_id: 1,
-				description: 'most_recent_post',
-				type: PostTypes.ORIGINAL,
-				created_at: new Date('2022-08-30 16:32:02'),
-				updated_at: new Date('2022-08-30 16:32:02'),
+			expect(result).toMatchObject({
+				post: {
+					id: 1,
+					user_id: 1,
+					description: 'most_recent_post',
+					type: PostTypes.ORIGINAL,
+					created_at: new Date('2022-08-30 16:32:02'),
+					updated_at: new Date('2022-08-30 16:32:02'),
+				}
 			})
 		})
+	})
+
+	describe('create()', () => {
+    
 	})
 })

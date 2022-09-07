@@ -18,7 +18,7 @@ export interface LoadPostByIdRepository {
 export namespace LoadPostByIdRepository {
   export type Input = { post_id: number }
 
-  export type Output = { post: PostEntity }
+  export type Output = { post: PostEntity | undefined }
 }
 
 export interface CreatePostRepository {

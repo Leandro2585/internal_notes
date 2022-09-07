@@ -3,6 +3,7 @@ import { CreatePostRepository, LoadPostByIdRepository } from '@data/protocols/re
 import { mockedPostEntity } from '@tests/domain/mocks'
 import { CreatePostsService } from '@data/services'
 import { PostTypes } from '@domain/models'
+import { NotFoundError } from '@domain/errors'
 
 describe('create posts service', () => {
 	let sut: CreatePostsService
@@ -44,5 +45,12 @@ describe('create posts service', () => {
 			description: 'any_description',
 			type: PostTypes.ORIGINAL
 		})
+	})
+
+	test('should thows NotFoundError when no post is found with the same id', async () => {
+		postsRepository.loadById.mockResolvedValue({ post: undefined })
+		const promise = sut.execute({ user_id: 1, post_id: 1 })
+
+		await expect(promise).rejects.toThrow(new NotFoundError())
 	})
 })
