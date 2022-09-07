@@ -17,6 +17,7 @@ export class CreateCommentService implements CreateCommentUseCase {
 		const { comment: created_comment } = await this.commentsRepository.create({ comment, post_id, user_id })
 		return {
 			comment: {
+				id: created_comment.id,
 				post_id,
 				username: existing_user.name,
 				comment: created_comment.comment,
