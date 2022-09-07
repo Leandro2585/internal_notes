@@ -27,10 +27,12 @@
     "test:watch": "yarn test --watch",
     "test:integration": "yarn test -- -c ./jest-integration-config.js",
     "test:coverage": "yarn test --coverage",
-    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "typeorm:seeds": "ts-node-dev src/infra/database/seeds/index.ts"
   },
   "dependencies": {
     "express": "^4.18.1",
+    "faker": "^6.6.6",
     "module-alias": "^2.2.2",
     "pg": "^8.8.0",
     "swagger": "^0.7.5",

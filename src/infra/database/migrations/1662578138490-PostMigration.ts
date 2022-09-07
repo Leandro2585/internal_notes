@@ -9,7 +9,8 @@ export class PostMigration1662578138490 implements MigrationInterface {
 					name: 'id',
 					type: 'integer',
 					isPrimary: true,
-					generationStrategy: 'increment'
+					generationStrategy: 'rowid',
+					isGenerated: true
 				},
 				{
 					name: 'user_id',

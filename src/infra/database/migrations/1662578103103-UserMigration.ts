@@ -8,8 +8,9 @@ export class UserMigration1662578103103 implements MigrationInterface {
 				{
 					name: 'id',
 					type: 'integer',
-					generationStrategy: 'increment',
-					isPrimary: true
+					generationStrategy: 'rowid',
+					isPrimary: true,
+					isGenerated: true
 				},
 				{
 					name: 'name',

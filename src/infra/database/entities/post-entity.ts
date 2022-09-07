@@ -4,7 +4,7 @@ import { PostTypes } from '@domain/models'
 
 @Entity({ name: 'tb_post' })
 export class PostEntity {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryGeneratedColumn('rowid')
   	id!: number
   
   @Column()
