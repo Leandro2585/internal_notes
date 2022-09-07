@@ -1,18 +1,19 @@
 import { mock, MockProxy } from 'jest-mock-extended'
-import { CreatePostRepository, LoadPostByIdRepository } from '@data/protocols/repositories'
+import { CreatePostRepository, LoadPostByIdRepository, LoadPostsRepository } from '@data/protocols/repositories'
 import { mockedPostEntity } from '@tests/domain/mocks'
 import { CreatePostsService } from '@data/services'
 import { PostTypes } from '@domain/models'
-import { NotFoundError } from '@domain/errors'
+import { CreationLimitExceeded, NotFoundError } from '@domain/errors'
 
 describe('create posts service', () => {
 	let sut: CreatePostsService
-	let postsRepository: MockProxy<LoadPostByIdRepository & CreatePostRepository>
+	let postsRepository: MockProxy<LoadPostByIdRepository & CreatePostRepository & LoadPostsRepository>
 
 	beforeAll(() => {
 		postsRepository = mock()
 		postsRepository.loadById.mockResolvedValue({ post: mockedPostEntity() })
 		postsRepository.create.mockResolvedValue({ post: mockedPostEntity() })
+		postsRepository.load.mockResolvedValue({ results: [1,2,3,4].map((o) => mockedPostEntity())})
 	})
 
 	beforeEach(() => {
@@ -52,5 +53,12 @@ describe('create posts service', () => {
 		const promise = sut.execute({ user_id: 1, post_id: 1 })
 
 		await expect(promise).rejects.toThrow(new NotFoundError())
+	})
+
+	test('should throws CreationLimitExceededError when user create more than 5 posts in the same day', async () => {
+		postsRepository.load.mockResolvedValue({ results: [1,2,3,4,5].map((o) => mockedPostEntity())})
+		const promise = sut.execute({ user_id: 1, post_id: 1 })
+
+		await expect(promise).rejects.toThrow(new CreationLimitExceeded())
 	})
 })
