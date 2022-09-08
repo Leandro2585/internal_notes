@@ -11,6 +11,16 @@ export namespace LoadPostsRepository {
   export type Output = { results: PostEntity[] }
 }
 
+export interface CountPostsRepository {
+  count(input: CountPostsRepository.Input): Promise<CountPostsRepository.Output>
+}
+
+export namespace CountPostsRepository {
+  export type Input = { user_id: number }
+
+  export type Output = { total_posts: number }
+}
+
 export interface LoadPostByIdRepository {
   loadById(input: LoadPostByIdRepository.Input): Promise<LoadPostByIdRepository.Output>
 }

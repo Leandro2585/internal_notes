@@ -1,4 +1,4 @@
-const root = process.env.TS_NODE_DEV === undefined ? 'dist' : 'src'
+const root = process.env.TS_NODE_DEV === undefined ? 'build' : 'src'
 
 module.exports = {
 	name: 'default',

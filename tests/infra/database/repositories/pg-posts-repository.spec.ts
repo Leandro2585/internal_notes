@@ -155,4 +155,24 @@ describe('pg posts repository', () => {
 			})
 		})
 	})
+
+	describe('count()', () => {
+		test('should return total_posts', async () => {
+			await pgPostRepository.save({
+				user_id: 1,
+				description: 'most_recent_post',
+				created_at: new Date('2022-08-30 16:32:02'),
+				updated_at: new Date('2022-08-30 16:32:02'),
+			})
+			await pgPostRepository.save({
+				user_id: 1,
+				description: 'most_recent_post',
+				created_at: new Date('2022-08-30 16:32:02'),
+				updated_at: new Date('2022-08-30 16:32:02'),
+			})
+			const result = await sut.count({ user_id: 1 })
+      
+			expect(result.total_posts).toBe(2)
+		})
+	})
 })

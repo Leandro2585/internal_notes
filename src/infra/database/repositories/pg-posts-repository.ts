@@ -1,9 +1,15 @@
-import { CreatePostRepository, LoadPostByIdRepository, LoadPostsRepository } from '@data/protocols/repositories'
+import { CountPostsRepository, CreatePostRepository, LoadPostByIdRepository, LoadPostsRepository } from '@data/protocols/repositories'
 import { PostgresRepository } from '@infra/database/protocols'
 import { PostEntity } from '@infra/database/entities'
 import { PostTypes } from '@domain/models'
 
-export class PgPostsRepository extends PostgresRepository implements LoadPostsRepository, LoadPostByIdRepository, CreatePostRepository {
+export class PgPostsRepository extends PostgresRepository implements LoadPostsRepository, LoadPostByIdRepository, CreatePostRepository, CountPostsRepository {
+	async count({ user_id }: CountPostsRepository.Input): Promise<CountPostsRepository.Output> {
+		const postsRepository = this.getRepository(PostEntity)
+		const total_posts = await postsRepository.count({ where: { user_id }})
+		return { total_posts }
+	}
+  
 	async create({ description, type, user_id }: CreatePostRepository.Input): Promise<CreatePostRepository.Output> {
 		const postsRepository = this.getRepository(PostEntity)
 		const post = postsRepository.create({ description, user_id, type })

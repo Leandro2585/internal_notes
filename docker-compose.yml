@@ -14,14 +14,14 @@ services:
     volumes:
       - ./data/postgres/pgdata:/var/lib/postgresql/data/pgdata
   api:
-    container_name: api-container
+    container_name: internal_notes_api
     image: node:16
-    working_dir: /usr/src/clean-node
+    working_dir: /usr/src/internal-notes
     restart: always
-    command: bash -c "yarn install --only=prod && yarn dev"
+    command: bash -c "yarn install --only=prod && yarn typeorm migration:run && yarn typeorm:seeds && yarn dev"
     volumes:
-      - ./build:/usr/src/clean-node/build/
-      - ./package.json:/usr/src/clean-node/package.json
+      - ./build:/usr/src/internal-notes/build/
+      - ./package.json:/usr/src/internal-notes/package.json
     ports: 
       - "3333:3333"
     links: 
