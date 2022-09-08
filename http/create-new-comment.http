@@ -1,0 +1,8 @@
+POST http://localhost:3333/api/comments
+Content-Type: application/json
+
+{
+	"comment": "My comment about this post",
+	"user_id": 1,
+	"post_id": 1
+}

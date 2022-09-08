@@ -6,7 +6,7 @@ export interface LoadPostsRepository {
 }
 
 export namespace LoadPostsRepository {
-  export type Input = { page: number, user_id?: number, initial_date?: string, final_date?: string }
+  export type Input = { page: number, user_id?: number, initial_date?: string, final_date?: string, limit?: number }
 
   export type Output = { results: PostEntity[] }
 }
