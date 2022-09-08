@@ -2,6 +2,7 @@ import { success } from '@application/helper'
 import { PostModel } from '@domain/models'
 import { LoadPostsUseCase } from '@domain/usecases'
 import { Controller, HttpResponse } from '@application/protocols'
+import { RequiredFieldError } from '@application/errors'
 
 export class LoadPostsController extends Controller {
 	constructor (private readonly loadPosts: LoadPostsUseCase){ super() }
@@ -12,7 +13,8 @@ export class LoadPostsController extends Controller {
 		return success(response)
 	}
 
-	validate(httpRequest: LoadPostsController.Request): Error | undefined {
+	validate({ page }: LoadPostsController.Request): Error | undefined {
+		if(!page) return new RequiredFieldError('page')
 		return
 	}
 }

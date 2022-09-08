@@ -1,6 +1,7 @@
 import { Controller } from '@application/protocols'
 import { LoadPostsController } from '@application/controllers'
 import { LoadPostsUseCaseSpy } from '../fakes/load-posts-usecase-spy'
+import { RequiredFieldError } from '@application/errors'
 
 describe('load posts controller', () => {
 	let loadPostsUseCaseSpy: LoadPostsUseCaseSpy
@@ -42,6 +43,15 @@ describe('load posts controller', () => {
 			user_id: 1, 
 			initial_date: undefined,
 			final_date: undefined 
+		})
+	})
+
+	test('should return RequiredFieldError when page field is not provided', async () => {
+		const result = await sut.handle({})
+
+		expect(result).toEqual({
+			status_code: 400,
+			data: new RequiredFieldError('page')
 		})
 	})
 })
