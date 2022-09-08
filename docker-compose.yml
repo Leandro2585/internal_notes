@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3'
 
 services:
   db:
@@ -12,3 +12,17 @@ services:
       - "5432:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
+  api:
+    container_name: internal_notes
+    image: internal_notes_v1
+    restart: always
+    build: .
+    command: yarn start
+    env_file:
+      - .env
+    volumes:
+      - ./build:/usr/src/internal_notes_v1/build
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    depends_on:
+      - db
