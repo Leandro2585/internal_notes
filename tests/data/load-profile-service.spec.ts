@@ -5,7 +5,7 @@ import { mockedPostEntity, mockedUserEntity } from '@tests/domain/mocks'
 import { NotFoundError } from '@domain/errors'
 import { LoadProfileService } from '@data/services'
 
-describe('create comment usecase', () => {
+describe('load profile service', () => {
 	let sut: LoadProfileService
 	let postsRepository: MockProxy<LoadPostsRepository & CountPostsRepository>
 	let usersRepository: MockProxy<LoadUserByIdRepository>
@@ -35,25 +35,4 @@ describe('create comment usecase', () => {
 
 		await expect(promise).rejects.toThrow(new NotFoundError('users'))
 	})
-
-	// test('should call LoadUserById with correct input', async () => {
-	// 	await sut.execute({ comment: 'any_comment', post_id: 1, user_id: 1 })
-
-	// 	expect(usersRepository.loadById).toHaveBeenCalledWith({ user_id: 1 })
-	// 	expect(usersRepository.loadById).toHaveBeenCalledTimes(1)
-	// })
-
-	// test('should throw NotFoundError if user not exists', async () => {
-	// 	usersRepository.loadById.mockResolvedValueOnce({ user: undefined })
-	// 	const promise = sut.execute({ comment: 'any_comment', post_id: 1, user_id: 2 })
-
-	// 	await expect(promise).rejects.toThrow(new NotFoundError('users'))
-	// })
-
-	// test('should call CreateCommentRepository with correct input', async () => {
-	// 	await sut.execute({ user_id: 1, post_id: 1, comment: 'any_comment' })
-
-	// 	expect(commentsRepository.create).toHaveBeenCalledWith({ user_id: 1, post_id: 1, comment: 'any_comment' })
-	// 	expect(commentsRepository.create).toHaveBeenCalledTimes(1)
-	// })
 })

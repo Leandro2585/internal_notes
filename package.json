@@ -22,14 +22,13 @@
     "typescript": "^4.8.2"
   },
   "scripts": {
-    "start": "node build/main/server.js",
+    "start": "npm run build && node build/main/server.js",
     "build": "rimraf build && tsc -p tsconfig-build.json",
-    "dev": "ts-node-dev --respawn --transpile-only --clear -r dotenv/config --inspect=0.0.0.0:9229 src/main/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --clear -r dotenv/config src/main/server.ts",
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "yarn test --watch",
-    "test:integration": "yarn test -- -c ./jest-integration-config.js",
     "test:coverage": "yarn test --coverage",
-    "typeorm": "node ./node_modules/typeorm/cli.js",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "typeorm:seeds": "ts-node-dev src/infra/database/seeds/index.ts"
   },
   "dependencies": {

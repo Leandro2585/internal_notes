@@ -18,10 +18,12 @@ export class LoadProfileService implements LoadProfileUseCase {
 			updated_at: formatDate(post.updated_at),
 		}))
 		return {
-			username: user.name,
-			created_at: formatDate(user.created_at),
-			total_posts,
-			recent_posts,
+			profile: {
+				username: user.name,
+				created_at: formatDate(user.created_at),
+				total_posts,
+				recent_posts,
+			}
 		}
 	}
 

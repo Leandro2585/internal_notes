@@ -8,21 +8,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: '12345678'
       POSTGRES_DB: internal_notes
-      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
-        - "5432:5432"
+      - "5432:5432"
     volumes:
-      - ./data/postgres/pgdata:/var/lib/postgresql/data/pgdata
-  api:
-    container_name: internal_notes_api
-    image: node:16
-    working_dir: /usr/src/internal-notes
-    restart: always
-    command: bash -c "yarn install --only=prod && yarn typeorm migration:run && yarn typeorm:seeds && yarn dev"
-    volumes:
-      - ./build:/usr/src/internal-notes/build/
-      - ./package.json:/usr/src/internal-notes/package.json
-    ports: 
-      - "3333:3333"
-    links: 
-      - db
+      - ./data:/var/lib/postgresql/data

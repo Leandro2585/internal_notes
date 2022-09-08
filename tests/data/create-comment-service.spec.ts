@@ -5,7 +5,7 @@ import { mockedCommentEntity, mockedPostEntity, mockedUserEntity } from '@tests/
 import { CreateCommentService } from '@data/services'
 import { NotFoundError } from '@domain/errors'
 
-describe('create comment usecase', () => {
+describe('create comment service', () => {
 	let sut: CreateCommentService
 	let postsRepository: MockProxy<LoadPostByIdRepository>
 	let usersRepository: MockProxy<LoadUserByIdRepository>
@@ -35,7 +35,7 @@ describe('create comment usecase', () => {
 		postsRepository.loadById.mockResolvedValueOnce({ post: undefined })
 		const promise = sut.execute({ comment: 'any_comment', post_id: 2, user_id: 1 })
 
-		await expect(promise).rejects.toThrow(new NotFoundError('posts'))
+		await expect(promise).rejects.toThrow(new NotFoundError('original posts'))
 	})
 
 	test('should call LoadUserById with correct input', async () => {

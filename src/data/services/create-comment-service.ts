@@ -11,7 +11,7 @@ export class CreateCommentService implements CreateCommentUseCase {
 	) {}
 	async execute({ post_id, user_id, comment }: CreateCommentUseCase.Input): Promise<CreateCommentUseCase.Output> {
 		const { post: existing_post } = await this.postsRepository.loadById({ post_id })
-		if(existing_post == undefined) throw new NotFoundError('posts')
+		if(existing_post == undefined) throw new NotFoundError('original posts')
 		const { user: existing_user } = await this.usersRepository.loadById({ user_id })
 		if(existing_user == undefined) throw new NotFoundError('users')
 		const { comment: created_comment } = await this.commentsRepository.create({ comment, post_id, user_id })
