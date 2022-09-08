@@ -13,3 +13,16 @@ services:
         - "5432:5432"
     volumes:
       - ./data/postgres/pgdata:/var/lib/postgresql/data/pgdata
+  api:
+    container_name: api-container
+    image: node:16
+    working_dir: /usr/src/clean-node
+    restart: always
+    command: bash -c "yarn install --only=prod && yarn dev"
+    volumes:
+      - ./build:/usr/src/clean-node/build/
+      - ./package.json:/usr/src/clean-node/package.json
+    ports: 
+      - "3333:3333"
+    links: 
+      - db

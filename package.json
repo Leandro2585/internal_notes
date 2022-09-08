@@ -22,6 +22,7 @@
     "typescript": "^4.8.2"
   },
   "scripts": {
+    "build": "rimraf build && typeorm migration:run && typeorm:seeds && tsc -p tsconfig-build.json",
     "dev": "ts-node-dev --respawn --transpile-only --clear -r dotenv/config --inspect=0.0.0.0:9229 src/main/server.ts",
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "yarn test --watch",
@@ -32,11 +33,9 @@
   },
   "dependencies": {
     "express": "^4.18.1",
-    "faker": "^6.6.6",
     "module-alias": "^2.2.2",
     "pg": "^8.8.0",
-    "swagger": "^0.7.5",
-    "swagger-ui-express": "^4.5.0",
+    "rimraf": "^3.0.2",
     "ts-node": "^10.9.1",
     "typeorm": "0.2.29"
   }
