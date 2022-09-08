@@ -6,7 +6,7 @@ export class PgCommentsRepository extends PostgresRepository implements CreateCo
 	async create({ comment, post_id, user_id }: CreateCommentRepository.Input): Promise<CreateCommentRepository.Output> {
 		const commentsRepository = this.getRepository(CommentEntity)
 		const created_comment = commentsRepository.create({ comment, user_id, post_id })
-		await commentsRepository.save(created_comment)
-		return { comment: created_comment }
+		const saved_comment = await commentsRepository.save(created_comment)
+		return { comment: saved_comment }
 	}
 }

@@ -17,9 +17,11 @@ export class CreatePostsService {
 		if (post_id) {
 			const { post: selected_post }= await this.postsRepository.loadById({ post_id })
 			if(selected_post == undefined) throw new NotFoundError('posts')
-			created_post = (await this.postsRepository.create({ description: selected_post.description, user_id, type: PostTypes.REPOST })).post
+			const { post: new_post } = await this.postsRepository.create({ description: selected_post.description, user_id, type: PostTypes.REPOST })
+			created_post = new_post
 		} else if (post) {
-			created_post = (await this.postsRepository.create({ ...post, user_id, type: PostTypes.ORIGINAL })).post
+			const { post: new_post } = await this.postsRepository.create({ description: post.description, user_id, type: PostTypes.ORIGINAL })
+			created_post = new_post
 		}
 		return { 
 			post: {

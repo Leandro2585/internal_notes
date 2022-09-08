@@ -7,8 +7,8 @@ export class PgPostsRepository extends PostgresRepository implements LoadPostsRe
 	async create({ description, type, user_id }: CreatePostRepository.Input): Promise<CreatePostRepository.Output> {
 		const postsRepository = this.getRepository(PostEntity)
 		const post = postsRepository.create({ description, user_id, type })
-		await postsRepository.save(post)
-		return { post }
+		const saved_post = await postsRepository.save(post)
+		return { post: saved_post }
 	}
   
 	async loadById({ post_id }: LoadPostByIdRepository.Input): Promise<LoadPostByIdRepository.Output> {
