@@ -12,3 +12,6 @@ COPY ./tsconfig-build.json .
 EXPOSE 3333
 
 RUN yarn install --only=prod
+
+COPY . .
+CMD ["yarn", "start"]
