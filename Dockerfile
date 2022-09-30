@@ -13,4 +13,5 @@ EXPOSE 3333
 RUN npm install
 
 COPY . .
-CMD ["npm", "run", "start"]
+
+CMD ["run", "start"]

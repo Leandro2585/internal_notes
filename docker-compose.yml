@@ -1,7 +1,8 @@
-version: '3'
+version: '3.9'
 
 services:
   db:
+    container_name: internal_notes_db_container
     image: postgres
     restart: always
     environment: 
@@ -13,21 +14,25 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data
     networks:
-      - notes  
+      - internal_notes_network  
   api:
     container_name: internal_notes
     restart: always
     build: 
       context: .
       dockerfile: Dockerfile
-    command: npm run start
+    command: bash -c "npm run typeorm migration:run && npm run start"
     volumes:
       - ./build:/usr/src/internal_notes_v1/build
     ports:
       - 3333:3333
     networks:
-      - notes  
+      - internal_notes_network
     depends_on:
       - db  
 networks:
-  notes:
+  internal_notes_network:
+    driver: bridge 
+volumes:
+  data:
+    driver: local
