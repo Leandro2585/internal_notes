@@ -4,7 +4,7 @@ import { readdirSync } from 'fs'
 export default (app: Express): void => {
 	const router = Router()
 	app.use('/api', router)
-	readdirSync(`${__dirname}/../routes`).map(async file => {
+	readdirSync(`${__dirname}/../routes`).filter(file => !file.endsWith('.map')).map(async file => {
 		(await import(`../routes/${file}`)).default(router)
 	})
 }
