@@ -1,3 +1,4 @@
+[![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
 ## Internal Notes
 
 Para testar as features da aplicação você pode utilizar o arquivos já preparados no diretório ```http``` com a estrutura das requests já prontas, para melhor experiência é recomendado que instale também em seu VS Code a extensão 'REST Client' para executar as requisições de uma forma dinâmica
