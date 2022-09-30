@@ -3,7 +3,7 @@ const root = process.env.TS_NODE_DEV === undefined ? 'build' : 'src'
 module.exports = {
 	name: "default",
     type: "postgres",
-    host: process.env.POSTGRES_HOST || "localhost",
+    host: process.env.POSTGRES_HOST || "internal_notes_db_container",
     port: +process.env.POSTGRES_PORT || 5432,
     username: process.env.POSTGRES_USERNAME || "postgres",
     password: process.env.POSTGRES_PASSWORD || "12345678",
