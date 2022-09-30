@@ -1,5 +1,17 @@
 {
   "name": "internal_notes",
+  "contributors": [
+    {
+      "name": "Leandro Real",
+      "email": "leandroreal@primi.com.br"
+    },
+    {
+      "name": "Henrique Nery"
+    },
+    {
+      "name": "Keveny Lima"
+    }
+  ],
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
