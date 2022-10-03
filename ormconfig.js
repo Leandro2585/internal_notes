@@ -9,9 +9,12 @@ module.exports = {
 	password: process.env.POSTGRES_PASSWORD || '12345678',
 	database: process.env.DB_NAME || 'internal_notes',
 	entities: [
+		`./${root}/infra/database/entities/*.js`,
 		`./${root}/infra/database/entities/*.ts`
+
 	],
 	migrations: [
+		`./${root}/infra/database/migrations/*.js`,
 		`./${root}/infra/database/migrations/*.ts`
 	],
 	cli: {
