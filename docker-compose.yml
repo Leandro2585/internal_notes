@@ -1,7 +1,5 @@
-version: '3'
-volumes:
-  data:
-    driver: local
+version: '3.9'
+
 services:
   db:
     container_name: internal_notes_db_container
@@ -23,16 +21,18 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    command: npm run start
+    command: bash -c "npm run typeorm migration:run && npm run start"
     volumes:
       - ./build:/usr/src/internal_notes_v1/build
     ports:
       - 3333:3333
     networks:
-      - internal_notes_network  
+      - internal_notes_network
     depends_on:
       - db  
 networks:
   internal_notes_network:
-    name: internal_notes_network
-    driver: bridge
+    driver: bridge 
+volumes:
+  data:
+    driver: local

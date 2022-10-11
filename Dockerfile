@@ -11,6 +11,6 @@ COPY ./tsconfig-build.json .
 EXPOSE 3333
 
 RUN npm install
-
 COPY . .
+
 CMD ["npm", "run", "start"]
